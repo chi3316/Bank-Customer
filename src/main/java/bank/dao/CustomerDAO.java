@@ -10,6 +10,25 @@ import java.util.List;
  * 持久层，对数据库表costumer进行增删改查
  */
 public class CustomerDAO {
+    public void add(String name) {
+        String sql = "INSERT INTO customers(name) VALUES(?) ";
+        try(Connection connection = DBUtil.getConnection();
+            var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+            preparedStatement.setString(1,name);
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            Customer customer = new Customer(name);
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                customer.setId(id);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void add(Customer customer) {
         String sql = "INSERT INTO customers(name) VALUES(?) ";
         try(Connection connection = DBUtil.getConnection();

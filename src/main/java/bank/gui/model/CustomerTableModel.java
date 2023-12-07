@@ -8,14 +8,17 @@ import javax.swing.table.TableModel;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * CustomerPanel 的 Table 的数据模型，实现了 TableModel 接口
+ * 将不同的数据源（例如数据库结果集、集合、数组等）与表格组件关联起来，以便在表格中显示和操作数据。
+ */
 public class CustomerTableModel implements TableModel {
     //列名
     private String[] columnNames = new String[] {"Customers List"};
     //行数据
     public List<Customer> customers = new CustomerService().list();
 
-    public CustomerTableModel() throws SQLException, IOException {
+    public CustomerTableModel()  {
     }
 
     public List<Customer> getCustomers() {

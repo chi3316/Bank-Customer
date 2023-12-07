@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class CustomerService {
     private CustomerDAO customerDAO = new CustomerDAO();
-    public void add(Customer customer) {
-        customerDAO.add(customer);
+    public void add(String name) {
+        customerDAO.add(name);
     }
 
     public int delete(int id) {

@@ -1,6 +1,8 @@
 package bank.gui.panel;
 
+import bank.gui.listener.CustomerListener;
 import bank.gui.model.CustomerTableModel;
+import bank.service.CustomerService;
 import bank.utils.GuiUtil;
 
 import javax.swing.*;
@@ -31,7 +33,7 @@ public class MainPanel extends JPanel {
     private CustomerTableModel ctm = new CustomerTableModel();
     private JTable table = new JTable(ctm);
 
-    public MainPanel() throws SQLException, IOException {
+    private MainPanel() throws SQLException, IOException {
         GuiUtil.setImageIcon(bAdd, "home.png", "添加");
         GuiUtil.setImageIcon(bDelete, "record.png", "删除");
         GuiUtil.setImageIcon(bSearch, "history.png", "查找");
@@ -45,12 +47,25 @@ public class MainPanel extends JPanel {
         JScrollPane jsp = new JScrollPane(table);
 
         this.setLayout(new BorderLayout());
+        this.add(jsp,BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
-        this.add(jsp,BorderLayout.NORTH);
-
-        //addListeners();
+        addListeners();
     }
     public static void main(String[] args) {
         GuiUtil.showPanel(MainPanel.instance,1);
+    }
+
+    public void addListeners() {
+        CustomerListener listener = new CustomerListener();
+        bAdd.addActionListener(listener);
+        bDelete.addActionListener(listener);
+        bSearch.addActionListener(listener);
+        bSort.addActionListener(listener);
+    }
+
+    //实时跟新表格数据
+    public void updateData()  {
+        ctm.customers = new CustomerService().list();
+        table.updateUI();
     }
 }
