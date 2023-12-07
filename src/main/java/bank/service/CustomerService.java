@@ -3,6 +3,7 @@ package bank.service;
 import bank.dao.CustomerDAO;
 import bank.entity.Customer;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,5 +25,11 @@ public class CustomerService {
 
     public List<Customer> list() {
         return customerDAO.list();
+    }
+
+    public List<Customer> listSorted() {
+        List<Customer> customers = customerDAO.list();
+        customers.sort((c1, c2) -> c1.getName().toUpperCase().compareTo(c2.getName().toUpperCase()));
+        return customers;
     }
 }

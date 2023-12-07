@@ -1,10 +1,9 @@
 package bank.gui.panel;
-
+import bank.entity.Customer;
 import bank.gui.listener.CustomerListener;
 import bank.gui.model.CustomerTableModel;
 import bank.service.CustomerService;
 import bank.utils.GuiUtil;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 
 public class MainPanel extends JPanel {
     public static MainPanel instance;
-
+    public boolean sorted = false;
     static {
         try {
             instance = new MainPanel();
@@ -34,10 +33,10 @@ public class MainPanel extends JPanel {
     private JTable table = new JTable(ctm);
 
     private MainPanel() throws SQLException, IOException {
-        GuiUtil.setImageIcon(bAdd, "home.png", "添加");
-        GuiUtil.setImageIcon(bDelete, "record.png", "删除");
-        GuiUtil.setImageIcon(bSearch, "history.png", "查找");
-        GuiUtil.setImageIcon(bSort, "report.png", "排序");
+        GuiUtil.setImageIcon(bAdd, "add-user.png", "添加");
+        GuiUtil.setImageIcon(bDelete, "delete.png", "删除");
+        GuiUtil.setImageIcon(bSearch, "search.png", "查找");
+        GuiUtil.setImageIcon(bSort, "sort.png", "排序");
 
         buttonPanel.add(bAdd);
         buttonPanel.add(bDelete);
@@ -65,7 +64,18 @@ public class MainPanel extends JPanel {
 
     //实时跟新表格数据
     public void updateData()  {
-        ctm.customers = new CustomerService().list();
+        if(!sorted) ctm.customers = new CustomerService().list();
+        else ctm.customers = new CustomerService().listSorted();
         table.updateUI();
+    }
+
+    //判断用户是否选中表格
+    public boolean checkSelected() {
+        return table.getSelectedRow() >= 0;
+    }
+
+    public Customer getSelectCustomer() {
+        int index = table.getSelectedRow();
+        return ctm.getCustomers().get(index > 0 ? index : 0);
     }
 }

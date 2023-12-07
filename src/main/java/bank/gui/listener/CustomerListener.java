@@ -1,5 +1,6 @@
 package bank.gui.listener;
 
+import bank.entity.Customer;
 import bank.gui.panel.MainPanel;
 import bank.service.CustomerService;
 
@@ -32,6 +33,29 @@ public class CustomerListener implements ActionListener {
                 customerService.add(name);
         }
 
+        if(p.bDelete == b) {
+            if(!p.checkSelected()) {
+                JOptionPane.showMessageDialog(p,"请先选中一行");
+                return;
+            }
+
+            Customer selectCustomer = p.getSelectCustomer();
+            if(JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(p,"确认删除？")) {
+                return;
+            }
+            int id = selectCustomer.getId();
+            customerService.delete(id);
+        }
+
+        //TODO:完成搜索的逻辑
+        if(p.bSearch == b) {
+
+        }
+
+        if(p.bSort == b) {
+            //点一下排序，再点一下取消排序
+            p.sorted =  p.sorted == true ? false : true;
+        }
 
         p.updateData();//更新表格数据
     }
