@@ -49,7 +49,27 @@ public class CustomerListener implements ActionListener {
 
         //TODO:完成搜索的逻辑
         if(p.bSearch == b) {
+            // 获取搜索框中的文本
+            String searchName = JOptionPane.showInputDialog("请输入要查找的客户名称");
+            if(searchName == null) {
+                return;
+            }
+            if(searchName.length() == 0) {
+                JOptionPane.showMessageDialog(p,"名字不能为空");
+                return;
+            }
 
+            // 遍历 JTable 中的记录
+            for (int i = 0; i < p.table.getRowCount(); i++) {
+                String nameInTable = (String) p.table.getValueAt(i, 0); // 获取表格中的客户名字
+                // 如果找到匹配的客户
+                if (nameInTable.equals(searchName)) {
+                    // 选中这一行，可能需要将选中的行滚动到可见区域
+                    p.table.setRowSelectionInterval(i, i);
+                    p.table.scrollRectToVisible(p.table.getCellRect(i, 0, true));
+                    break;
+                }
+            }
         }
 
         if(p.bSort == b) {

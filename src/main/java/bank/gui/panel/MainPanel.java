@@ -30,7 +30,7 @@ public class MainPanel extends JPanel {
 
     //将表格 table 关联到数据模型 ctm 上
     private CustomerTableModel ctm = new CustomerTableModel();
-    private JTable table = new JTable(ctm);
+    public JTable table = new JTable(ctm);
 
     private MainPanel() throws SQLException, IOException {
         GuiUtil.setImageIcon(bAdd, "add-user.png", "添加");
