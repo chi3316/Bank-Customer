@@ -5,8 +5,6 @@ import bank.service.CustomerService;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 /**
  * CustomerPanel 的 Table 的数据模型，实现了 TableModel 接口
@@ -20,6 +18,10 @@ public class CustomerTableModel implements TableModel {
 
     public CustomerTableModel()  {
     }
+
+//    public int getSelectedRowId(int rowIndex, int columnIndex) {
+//        if(columnIndex == 0) return customers.get(rowIndex).getId();
+//    }
 
     public List<Customer> getCustomers() {
         return customers;
@@ -53,6 +55,7 @@ public class CustomerTableModel implements TableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         //第一列的值：客户名
         if(columnIndex == 0) return customers.get(rowIndex).getName();
+        //if(columnIndex == 0) return customers.get(rowIndex);
         return null;
     }
 

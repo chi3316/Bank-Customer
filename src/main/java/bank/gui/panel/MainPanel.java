@@ -1,6 +1,7 @@
 package bank.gui.panel;
 import bank.entity.Customer;
 import bank.gui.listener.CustomerListener;
+import bank.gui.listener.CustomerMouseListener;
 import bank.gui.model.CustomerTableModel;
 import bank.service.CustomerService;
 import bank.utils.GuiUtil;
@@ -49,11 +50,19 @@ public class MainPanel extends JPanel {
         this.add(jsp,BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         addListeners();
+        addMouseListeners();
     }
     public static void main(String[] args) {
         GuiUtil.showPanel(MainPanel.instance,1);
     }
 
+    //鼠标监听
+    public void addMouseListeners() {
+        CustomerMouseListener customerMouseListener = new CustomerMouseListener(table);
+        table.addMouseListener(customerMouseListener);
+    }
+
+    //事件监听
     public void addListeners() {
         CustomerListener listener = new CustomerListener();
         bAdd.addActionListener(listener);

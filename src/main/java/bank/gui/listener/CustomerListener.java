@@ -7,8 +7,7 @@ import bank.service.CustomerService;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.SQLException;
+
 
 public class CustomerListener implements ActionListener {
     @Override
@@ -47,7 +46,6 @@ public class CustomerListener implements ActionListener {
             customerService.delete(id);
         }
 
-        //TODO:完成搜索的逻辑
         if(p.bSearch == b) {
             // 获取搜索框中的文本
             String searchName = JOptionPane.showInputDialog("请输入要查找的客户名称");
@@ -76,6 +74,7 @@ public class CustomerListener implements ActionListener {
             //点一下排序，再点一下取消排序
             p.sorted =  p.sorted == true ? false : true;
         }
+
 
         p.updateData();//更新表格数据
     }

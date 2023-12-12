@@ -11,7 +11,7 @@ public class Frame extends JFrame {
         this.setSize(513,450);
         this.setContentPane(MainPanel.instance);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
