@@ -2,7 +2,9 @@ package bank.gui.listener;
 
 import bank.entity.Customer;
 import bank.gui.panel.MainPanel;
+import bank.service.CheckingAccountService;
 import bank.service.CustomerService;
+import bank.service.SavingAccountService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,8 @@ public class CustomerListener implements ActionListener {
         MainPanel p = MainPanel.instance;
         //业务处理对象service
         CustomerService customerService = new CustomerService();
+        CheckingAccountService checkingAccountService = new CheckingAccountService();
+        SavingAccountService savingAccountService = new SavingAccountService();
         //判断用户点击的按钮
         JButton b = (JButton) e.getSource();
 
@@ -29,7 +33,12 @@ public class CustomerListener implements ActionListener {
                 JOptionPane.showMessageDialog(p,"名字不能为空");
                 return;
             }
-                customerService.add(name);
+            customerService.add(name);
+            Double overdraftProtection = Double.parseDouble(JOptionPane.showInputDialog("请输入客户支票账户的可透支金额："));
+            int id = customerService.getId(name);
+            checkingAccountService.add(overdraftProtection,id);
+            Double balance = Double.parseDouble(JOptionPane.showInputDialog("请输入客户储蓄账户的余额："));
+            savingAccountService.add(balance,id);
         }
 
         if(p.bDelete == b) {
@@ -43,6 +52,8 @@ public class CustomerListener implements ActionListener {
                 return;
             }
             int id = selectCustomer.getId();
+            checkingAccountService.delete(id);
+            savingAccountService.delete(id);
             customerService.delete(id);
         }
 

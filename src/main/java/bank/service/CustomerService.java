@@ -1,9 +1,6 @@
 package bank.service;
-
 import bank.dao.CustomerDAO;
 import bank.entity.Customer;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 

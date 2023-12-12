@@ -7,4 +7,13 @@ public class SavingAccountService {
     public SavingAccount getById(int id) {
         return savingAccountDAO.getById(id);
     }
+
+    public void add(double balance,int id) {
+        SavingAccount savingAccount = new SavingAccount(balance,id);
+        savingAccountDAO.add(savingAccount);
+    }
+
+    public int delete(int id) {
+        return savingAccountDAO.delete(id);
+    }
 }

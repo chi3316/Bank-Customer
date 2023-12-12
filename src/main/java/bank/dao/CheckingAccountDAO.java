@@ -24,4 +24,34 @@ public class CheckingAccountDAO {
         }
         return checkingAccount;
     }
+
+    public void add(CheckingAccount checkingAccount) {
+        String sql = "INSERT INTO `checking_account` VALUES(?,?) ";
+        try(Connection connection = DBUtil.getConnection();
+            var preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1,checkingAccount.getId());
+            preparedStatement.setDouble(2,checkingAccount.getOverdraftProtection());
+            preparedStatement.executeUpdate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int delete(int id) {
+        String sql = "DELETE FROM `checking_account` WHERE id = ?";
+        int res = 0;
+        try(Connection connection = DBUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ) {
+            preparedStatement.setInt(1,id);
+            res = preparedStatement.executeUpdate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }
